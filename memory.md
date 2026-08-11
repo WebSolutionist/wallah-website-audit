@@ -18,6 +18,8 @@ Build a single page conversion website for Wallah Waiji Precious, Web Solutionis
 
 ## Live links
 
+- Vercel Website: https://wallah-website-audit.vercel.app
+- GitHub Repository: https://github.com/WebSolutionist/wallah-website-audit
 - Calendly: https://calendly.com/wallahwaijiprecious/30min
 - Email: wallahwaijienterprises@gmail.com
 - WhatsApp: https://wa.me/2347052147722

@@ -32,7 +32,7 @@
         margin: 0;
         overflow-x: hidden;
         color: var(--ink);
-        background: var(--mist);
+        background: radial-gradient(circle at 50% 0%, #0d2246 0%, #061125 100%);
         font-family: Inter, sans-serif;
         font-size: 16px;
         line-height: 1.6;
@@ -47,7 +47,7 @@
 
       .shell { width: min(100% - 2.5rem, 74rem); margin-inline: auto; }
       .section { padding: 5.5rem 0; position: relative; }
-      .navy { background: var(--navy); color: var(--white); }
+      .navy { background: var(--navy-deep); color: var(--white); }
       .light { background: var(--mist); color: var(--ink); }
       .eyebrow { margin-bottom: 1rem; color: var(--teal); font-size: .74rem; font-weight: 700; letter-spacing: .13em; text-transform: uppercase; }
       .section-title { max-width: 15ch; margin-bottom: 2.4rem; font-size: clamp(2rem, 5vw, 3.3rem); }
@@ -67,42 +67,115 @@
       .mobile-menu .nav-link { min-height: 44px; display: flex; align-items: center; }
 
       .hero { min-height: 42rem; display: grid; align-items: center; padding: 4rem 0 5.5rem; }
-      .hero::before { content: ""; position: absolute; inset: 0; pointer-events: none; background-image: linear-gradient(var(--line-light) 1px, transparent 1px), linear-gradient(90deg, var(--line-light) 1px, transparent 1px); background-size: 70px 70px; opacity: .2; }
+      .hero::before { content: ""; position: absolute; inset: 0; pointer-events: none; background-image: linear-gradient(var(--line-light) 1px, transparent 1px), linear-gradient(90deg, var(--line-light) 1px, transparent 1px); background-size: 70px 70px; opacity: .18; }
       .hero-grid { position: relative; z-index: 1; display: grid; gap: 3rem; align-items: center; }
       .hero-copy { max-width: 39rem; }
-      h1 { max-width: 12ch; margin-bottom: 1.35rem; font-size: clamp(2.65rem, 8.2vw, 5.4rem); font-weight: 700; }
+      h1 { max-width: 14ch; margin-bottom: 1.35rem; font-size: clamp(2.5rem, 6.5vw, 4.4rem); font-weight: 700; line-height: 1.1; }
       .hero-summary { max-width: 34rem; margin-bottom: 2rem; color: var(--mist); font-size: clamp(1.02rem, 2.5vw, 1.17rem); }
-      .button { min-height: 48px; display: inline-flex; align-items: center; justify-content: center; gap: .5rem; padding: .9rem 1.1rem; border: 1px solid var(--teal); border-radius: 6px; color: var(--navy); background: var(--teal); font-weight: 700; line-height: 1.2; text-align: center; text-decoration: none; transition: transform 180ms ease, background-color 180ms ease; }
-      .button:hover { transform: translateY(-2px); background: #39cbe7; }
+      .button { min-height: 48px; display: inline-flex; align-items: center; justify-content: center; gap: .5rem; padding: .9rem 1.1rem; border: 1px solid var(--teal); border-radius: 6px; color: var(--navy); background: var(--teal); font-weight: 700; line-height: 1.2; text-align: center; text-decoration: none; transition: transform 180ms ease, background-color 180ms ease; box-shadow: 0 4px 18px rgba(0, 180, 216, .3); }
+      .button:hover { transform: translateY(-2px); background: #39cbe7; box-shadow: 0 6px 24px rgba(0, 180, 216, .45); }
       .button svg { width: 17px; height: 17px; }
 
-      .diagnostic-visual { min-height: 30rem; position: relative; display: flex; justify-content: center; align-items: center; isolation: isolate; width: 100%; max-width: 27rem; margin-inline: auto; }
-      .portrait-wrap { width: min(100%, 22rem); height: 26.5rem; position: relative; z-index: 2; display: flex; justify-content: center; align-items: center; }
-      .portrait-wrap::after { content: "WALLAH WAIJI PRECIOUS"; position: absolute; left: 50%; transform: translateX(-50%); bottom: 0.4rem; z-index: 3; color: var(--mist); font-size: .66rem; font-weight: 700; letter-spacing: .12em; text-shadow: 0 2px 6px rgba(0,0,0,0.9); text-align: center; white-space: nowrap; }
-      .portrait { width: auto; max-width: 100%; height: 26.5rem; position: relative; z-index: 2; align-self: center; object-fit: contain; object-position: center; filter: drop-shadow(0 0 22px rgba(0, 180, 216, .38)) drop-shadow(0 18px 28px rgba(0, 0, 0, .5)); }
-      .portrait-glow { position: absolute; width: 22rem; height: 22rem; border-radius: 50%; background: radial-gradient(circle, rgba(0, 180, 216, 0.42) 0%, rgba(10, 25, 49, 0) 70%); z-index: 1; pointer-events: none; top: 50%; left: 50%; transform: translate(-50%, -50%); }
+      /* Concept 1: Interactive Audit Diagnostic Simulator */
+      .diagnostic-simulator {
+        width: 100%;
+        max-width: 33rem;
+        margin-inline: auto;
+        border: 1px solid rgba(0, 180, 216, .45);
+        border-radius: 12px;
+        background: rgba(6, 17, 37, .94);
+        backdrop-filter: blur(16px);
+        box-shadow: 0 25px 50px rgba(0, 0, 0, .45), 0 0 35px rgba(0, 180, 216, .15);
+        overflow: hidden;
+        position: relative;
+        isolation: isolate;
+      }
+      .sim-topbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: .65rem .95rem;
+        background: rgba(10, 25, 49, .9);
+        border-bottom: 1px solid rgba(0, 180, 216, .2);
+      }
+      .sim-dots { display: flex; gap: .45rem; }
+      .sim-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+      .dot-red { background: #ff5f56; }
+      .dot-yellow { background: #ffbd2e; }
+      .dot-green { background: #27c93f; }
+      .sim-address {
+        font-family: monospace;
+        font-size: .72rem;
+        color: var(--teal);
+        background: rgba(0, 180, 216, .1);
+        padding: .2rem .75rem;
+        border-radius: 4px;
+        letter-spacing: .05em;
+      }
+      .sim-live-badge {
+        font-size: .62rem;
+        font-weight: 700;
+        color: #00f5d4;
+        letter-spacing: .1em;
+        text-transform: uppercase;
+        display: flex;
+        align-items: center;
+        gap: .35rem;
+      }
+      .sim-live-badge::before {
+        content: "";
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: #00f5d4;
+        box-shadow: 0 0 8px #00f5d4;
+        animation: sim-pulse 1.8s infinite;
+      }
+      @keyframes sim-pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: .4; transform: scale(0.85); } }
 
-      .diagnostic-map { width: 130%; height: 130%; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 1; overflow: visible; pointer-events: none; }
-      .diagnostic-map * { fill: none; }
-      .map-line { stroke: var(--teal); stroke-width: 1.5; stroke-dasharray: 4 7; opacity: .65; }
-      .map-orbit { stroke: rgba(0, 180, 216, .4); stroke-width: 1.2; }
-      .map-scan { stroke: var(--teal); stroke-width: 1.5; opacity: .55; }
-      .map-node { fill: var(--teal) !important; }
+      .sim-body { padding: 1.25rem; display: grid; gap: 1rem; position: relative; }
 
-      .hud-card { position: absolute; z-index: 4; display: flex; flex-direction: column; gap: .3rem; padding: .7rem .95rem; border: 1px solid rgba(0, 180, 216, .55); border-radius: 8px; color: var(--white); background: rgba(6, 17, 37, .94); backdrop-filter: blur(12px); box-shadow: 0 14px 28px rgba(0, 0, 0, .35); transition: transform 180ms ease, border-color 180ms ease; cursor: pointer; text-align: left; max-width: 13.5rem; }
-      .hud-card:hover { border-color: var(--teal); transform: translateY(-3px); }
-      .hud-header { display: flex; align-items: center; gap: .45rem; }
-      .hud-status { width: 8px; height: 8px; border-radius: 50%; display: inline-block; flex: 0 0 auto; }
-      .status-red { background: #ff4d4d; box-shadow: 0 0 8px rgba(255, 77, 77, .6); }
-      .status-yellow { background: #ffbe0b; box-shadow: 0 0 8px rgba(255, 190, 11, .6); }
-      .status-green { background: #00f5d4; box-shadow: 0 0 8px rgba(0, 245, 212, .6); }
-      .hud-tag { color: var(--teal); font-size: .65rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
-      .hud-val { display: block; font-family: Outfit, sans-serif; font-size: .95rem; font-weight: 600; line-height: 1.15; color: var(--white); }
-      .hud-sub { display: block; color: var(--line-dark); font-size: .73rem; font-weight: 400; }
+      .sim-gauge-card {
+        padding: 1rem;
+        border: 1px solid rgba(0, 180, 216, .3);
+        border-radius: 8px;
+        background: rgba(10, 25, 49, .6);
+      }
+      .sim-gauge-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: .55rem; }
+      .sim-gauge-title { font-size: .72rem; font-weight: 700; letter-spacing: .08em; color: var(--mist); text-transform: uppercase; }
+      .sim-gauge-score { font-family: Outfit, sans-serif; font-size: 1.05rem; font-weight: 700; color: #ffbe0b; }
+      .sim-gauge-bar { width: 100%; height: 8px; background: rgba(255, 255, 255, .1); border-radius: 4px; overflow: hidden; }
+      .sim-gauge-fill { width: 38%; height: 100%; background: linear-gradient(90deg, #ff4d4d 0%, #ffbe0b 100%); border-radius: 4px; }
 
-      .hud-one { top: 0.5rem; left: -1.2rem; }
-      .hud-two { top: 48%; right: -1.2rem; transform: translateY(-50%); }
-      .hud-three { bottom: 0.5rem; left: -1.2rem; }
+      .sim-nodes { display: grid; gap: .75rem; }
+      .sim-node {
+        display: flex;
+        align-items: center;
+        gap: .75rem;
+        padding: .8rem .95rem;
+        border: 1px solid rgba(234, 241, 245, .14);
+        border-radius: 8px;
+        background: rgba(6, 17, 37, .85);
+        transition: border-color 180ms ease, transform 180ms ease;
+      }
+      .sim-node:hover { border-color: var(--teal); transform: translateX(3px); }
+      .sim-node-status { width: 8px; height: 8px; border-radius: 50%; flex: 0 0 auto; }
+      .sim-node-info h4 { font-family: Outfit, sans-serif; font-size: .94rem; margin: 0 0 .15rem 0; color: var(--white); font-weight: 600; }
+      .sim-node-info p { margin: 0; font-size: .78rem; color: var(--line-dark); }
+
+      .sim-scan-beam {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: linear-gradient(90deg, transparent 0%, var(--teal) 50%, transparent 100%);
+        box-shadow: 0 0 12px var(--teal);
+        opacity: .6;
+        animation: sim-scan 4s linear infinite;
+        pointer-events: none;
+      }
+      @keyframes sim-scan { 0% { top: 0; opacity: 0; } 15% { opacity: .7; } 85% { opacity: .7; } 100% { top: 100%; opacity: 0; } }
 
       .problem-head { display: flex; justify-content: space-between; gap: 1rem; align-items: end; margin-bottom: 2.4rem; }
       .problem-head .section-title { margin-bottom: 0; }
@@ -255,47 +328,58 @@
         <div class="shell hero-grid">
           <div class="hero-copy reveal">
             <p class="eyebrow">Website conversion audit</p>
-            <h1 id="hero-title">Your website exists. But is it actually working for your business?</h1>
+            <h1 id="hero-title">Your website exists to book clients, not send you back to manual DM conversations.</h1>
             <p class="hero-summary">I help founders and small businesses close the gap between having a website and having one that converts.</p>
             <a class="button" href="https://calendly.com/wallahwaijiprecious/30min" target="_blank" rel="noreferrer">Book a Free Website Audit <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M14 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
           </div>
-          <div class="diagnostic-visual reveal" aria-label="Website audit diagnostic visual">
-            <div class="hud-card hud-one" data-card="signal-one">
-              <div class="hud-header">
-                <span class="hud-status status-red"></span>
-                <span class="hud-tag">HIGH BOUNCE RATE</span>
+          <div class="diagnostic-simulator reveal" aria-label="Live Website Audit Diagnostic Simulator">
+            <div class="sim-scan-beam"></div>
+            <div class="sim-topbar">
+              <div class="sim-dots">
+                <span class="sim-dot dot-red"></span>
+                <span class="sim-dot dot-yellow"></span>
+                <span class="sim-dot dot-green"></span>
               </div>
-              <span class="hud-val">68% Drop-off</span>
-              <span class="hud-sub">Visitors leaving silently</span>
+              <span class="sim-address">diagnostic.audit/live-scan</span>
+              <span class="sim-live-badge">LIVE SCAN</span>
             </div>
-
-            <div class="hud-card hud-two" data-card="signal-two">
-              <div class="hud-header">
-                <span class="hud-status status-yellow"></span>
-                <span class="hud-tag">CLARITY INDEX</span>
+            <div class="sim-body">
+              <div class="sim-gauge-card">
+                <div class="sim-gauge-head">
+                  <span class="sim-gauge-title">Conversion Health Index</span>
+                  <span class="sim-gauge-score">38 / 100 (Critical Leak)</span>
+                </div>
+                <div class="sim-gauge-bar">
+                  <div class="sim-gauge-fill"></div>
+                </div>
               </div>
-              <span class="hud-val">Offer Unclear</span>
-              <span class="hud-sub">DM pitch fatigue</span>
-            </div>
 
-            <div class="hud-card hud-three" data-card="signal-three">
-              <div class="hud-header">
-                <span class="hud-status status-green"></span>
-                <span class="hud-tag">DIAGNOSTIC FIX</span>
+              <div class="sim-nodes">
+                <div class="sim-node">
+                  <span class="sim-node-status status-red"></span>
+                  <div class="sim-node-info">
+                    <h4>Friction 01: Unclear Value Proposition</h4>
+                    <p>42% of first-time visitors bounce within 5 seconds without understanding what you do.</p>
+                  </div>
+                </div>
+
+                <div class="sim-node">
+                  <span class="sim-node-status status-yellow"></span>
+                  <div class="sim-node-info">
+                    <h4>Friction 02: Hidden Call-to-Action</h4>
+                    <p>Visitors are interested, but your primary booking step is buried below the fold.</p>
+                  </div>
+                </div>
+
+                <div class="sim-node">
+                  <span class="sim-node-status status-green"></span>
+                  <div class="sim-node-info">
+                    <h4>Fix Prescribed: 30-Min High-Impact Roadmap</h4>
+                    <p>Actionable priorities to turn silent traffic into booked discovery sessions.</p>
+                  </div>
+                </div>
               </div>
-              <span class="hud-val">30-Min Roadmap</span>
-              <span class="hud-sub">Clear conversion path</span>
             </div>
-
-            <div class="portrait-glow"></div>
-            <svg class="diagnostic-map" viewBox="0 0 400 440" aria-hidden="true">
-              <ellipse class="map-orbit" cx="200" cy="224" rx="150" ry="182"/>
-              <ellipse class="map-orbit" cx="200" cy="224" rx="116" ry="151"/>
-              <path class="map-scan" d="M95 99 310 345"/>
-              <path class="map-line" d="M18 70h92l42 72M382 210h-85l-50 42M18 364h111l43-74"/>
-              <circle class="map-node" cx="18" cy="70" r="4"/><circle class="map-node" cx="382" cy="210" r="4"/><circle class="map-node" cx="18" cy="364" r="4"/>
-            </svg>
-            <div class="portrait-wrap"><img class="portrait" src="assets/wallah-portrait-cutout.png" alt="Wallah Waiji Precious, Web Solutionist"></div>
           </div>
         </div>
       </section>
