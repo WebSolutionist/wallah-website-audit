@@ -28,8 +28,8 @@ Build a single page conversion website for Wallah Waiji Precious, Web Solutionis
 ## Completed
 
 - Rebuilt `index.html` as the Conversion Diagnostic Studio landing page.
-- Centralized Wallah's portrait cutout directly inside the center of the circular orbit rings and backdrop glow aura.
-- Enhanced portrait photo contrast, color saturation, sharpness, and edge depth using PIL.
+- Updated hero subtitle copy to Option 4 ("Stop repeating your pitch one message at a time. I diagnose website bottlenecks so your page delivers the clarity required to convert.").
+- Updated hero headline to Headline #4 ("Your website exists to book clients, not send you back to manual DM conversations.").
 - Processed AI background removal on Wallah's high-res camera photograph (`assets/wallah-portrait-cutout.png`).
 - Created custom website favicons (`favicon.ico` and `assets/favicon.png`) and linked them in `<head>`.
 - Refined HUD cards layout (`Clarity Index`, `Bounce Rate`, `Diagnostic Fix`) to guarantee zero text clipping and proper floating positioning around the portrait cutout.
