@@ -22,7 +22,7 @@
   <header class="site-header">
     <div class="container header-inner">
       <a href="#hero" class="brand-logo">
-        <div class="brand-mark">WS</div>
+        <img src="assets/favicon.png" alt="The Web Solutionist Logo" class="brand-logo-img">
         <span>The Web Solutionist</span>
       </a>
 
@@ -514,70 +514,85 @@
   </footer>
 
   <!-- ==========================================================================
-       APPLICATION & CONTACT MODALS (Contained Height & Cancel Buttons)
+       APPLICATION & CONTACT MODALS (Options A & Option 1 Integration)
        ========================================================================== -->
 
-  <!-- Modal 1: Apply for 5 Free Websites -->
+  <!-- Modal 1: Apply for 5 Free Websites (Option A: Intake -> Success Card + WhatsApp Fast-Track) -->
   <div class="modal-overlay" id="modal-website">
     <div class="modal-card">
       <button class="modal-close-icon modal-close" aria-label="Close modal">&times;</button>
-      <div class="section-tag">INITIATIVE 01</div>
-      <h3 style="font-size: 1.5rem; margin-bottom: 0.5rem;">Apply for a Free 1-Page Website</h3>
-      <p class="text-muted" style="font-size: 0.875rem; margin-bottom: 1.5rem;">For operating businesses ready to establish a professional digital presence.</p>
+      
+      <!-- Form Content View -->
+      <div id="modal-website-form-view">
+        <div class="section-tag">INITIATIVE 01</div>
+        <h3 style="font-size: 1.5rem; margin-bottom: 0.5rem;">Apply for a Free 1-Page Website</h3>
+        <p class="text-muted" style="font-size: 0.875rem; margin-bottom: 1.5rem;">For operating businesses ready to establish a professional digital presence.</p>
 
-      <form>
-        <div class="form-group">
-          <label class="form-label">FULL NAME</label>
-          <input type="text" class="form-input" placeholder="e.g. Alex Johnson" required>
+        <form id="form-website-apply">
+          <div class="form-group">
+            <label class="form-label">FULL NAME</label>
+            <input type="text" class="form-input" placeholder="e.g. Alex Johnson" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">BUSINESS NAME & INDUSTRY</label>
+            <input type="text" class="form-input" placeholder="e.g. Apex Legal Consulting" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">EMAIL ADDRESS</label>
+            <input type="email" class="form-input" placeholder="alex@company.com" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">WHAT IS YOUR CORE BUSINESS PROBLEM RIGHT NOW?</label>
+            <textarea class="form-textarea" rows="3" placeholder="Tell me what problem you want this website to solve..." required></textarea>
+          </div>
+          <div class="modal-actions">
+            <button type="button" class="btn btn-outline modal-close">Cancel</button>
+            <button type="submit" class="btn btn-primary">SUBMIT APPLICATION →</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Success Screen View (Option A) -->
+      <div id="modal-website-success-view" style="display: none;">
+        <div class="modal-success-box">
+          <div class="success-icon">✓</div>
+          <h3 style="font-size: 1.5rem; margin-bottom: 0.75rem;">Application Received!</h3>
+          <p class="text-muted" style="font-size: 0.95rem; margin-bottom: 1.5rem; line-height: 1.6;">
+            Thank you for applying. Precious will review your business problem within 24 hours.<br><br>
+            <strong>Want to fast-track your review?</strong> Click below to send a direct message on WhatsApp.
+          </p>
+          <div style="display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap;">
+            <a href="https://wa.me/2347052147722?text=Hi%20Precious%2C%20I%20just%20submitted%20my%20application%20for%20a%20free%201-page%20website." target="_blank" rel="noopener" class="btn btn-primary">
+              CHAT ON WHATSAPP →
+            </a>
+            <button type="button" class="btn btn-outline modal-close">Done</button>
+          </div>
         </div>
-        <div class="form-group">
-          <label class="form-label">BUSINESS NAME & INDUSTRY</label>
-          <input type="text" class="form-input" placeholder="e.g. Apex Legal Consulting" required>
-        </div>
-        <div class="form-group">
-          <label class="form-label">EMAIL ADDRESS</label>
-          <input type="email" class="form-input" placeholder="alex@company.com" required>
-        </div>
-        <div class="form-group">
-          <label class="form-label">WHAT IS YOUR CORE BUSINESS PROBLEM RIGHT NOW?</label>
-          <textarea class="form-textarea" rows="3" placeholder="Tell me what problem you want this website to solve..." required></textarea>
-        </div>
-        <div class="modal-actions">
-          <button type="button" class="btn btn-outline modal-close">Cancel</button>
-          <button type="submit" class="btn btn-primary">SUBMIT APPLICATION →</button>
-        </div>
-      </form>
+      </div>
     </div>
   </div>
 
-  <!-- Modal 2: Request 10 Free Diagnoses -->
+  <!-- Modal 2: Request 10 Free Diagnoses (Option 1: Quick 2-Field Intake -> Calendly Redirect) -->
   <div class="modal-overlay" id="modal-diagnosis">
     <div class="modal-card">
       <button class="modal-close-icon modal-close" aria-label="Close modal">&times;</button>
+      
       <div class="section-tag">INITIATIVE 02</div>
       <h3 style="font-size: 1.5rem; margin-bottom: 0.5rem;">Request a Free Website Diagnosis</h3>
-      <p class="text-muted" style="font-size: 0.875rem; margin-bottom: 1.5rem;">Get a diagnostic breakdown and a clear 3-step action priority matrix for your site.</p>
+      <p class="text-muted" style="font-size: 0.875rem; margin-bottom: 1.5rem;">Enter your website URL to initiate the diagnostic review, then schedule your 30-min live audit.</p>
 
-      <form>
+      <form id="form-diagnosis-request">
         <div class="form-group">
-          <label class="form-label">FULL NAME</label>
-          <input type="text" class="form-input" placeholder="e.g. Sarah Connor" required>
+          <label class="form-label">YOUR WEBSITE URL</label>
+          <input type="url" id="diag-url" class="form-input" placeholder="https://yourcompany.com" required>
         </div>
         <div class="form-group">
-          <label class="form-label">CURRENT WEBSITE URL</label>
-          <input type="url" class="form-input" placeholder="https://yourwebsite.com" required>
-        </div>
-        <div class="form-group">
-          <label class="form-label">EMAIL ADDRESS</label>
-          <input type="email" class="form-input" placeholder="sarah@company.com" required>
-        </div>
-        <div class="form-group">
-          <label class="form-label">WHAT DO YOU FEEL IS HOLDING YOUR WEBSITE BACK?</label>
-          <textarea class="form-textarea" rows="3" placeholder="e.g. High bounce rate, low conversion, outdated design..." required></textarea>
+          <label class="form-label">YOUR EMAIL ADDRESS</label>
+          <input type="email" id="diag-email" class="form-input" placeholder="you@company.com" required>
         </div>
         <div class="modal-actions">
           <button type="button" class="btn btn-outline modal-close">Cancel</button>
-          <button type="submit" class="btn btn-primary">REQUEST DIAGNOSIS →</button>
+          <button type="submit" class="btn btn-primary">CONTINUE TO BOOK DIAGNOSIS →</button>
         </div>
       </form>
     </div>
@@ -591,7 +606,7 @@
       <h3 style="font-size: 1.5rem; margin-bottom: 0.5rem;">Let's Talk About Your Problem</h3>
       <p class="text-muted" style="font-size: 0.875rem; margin-bottom: 1.5rem;">No sales pitch. Just a strategic conversation about what you need to build.</p>
 
-      <form>
+      <form id="form-contact">
         <div class="form-group">
           <label class="form-label">YOUR NAME</label>
           <input type="text" class="form-input" placeholder="e.g. David Miller" required>
@@ -602,7 +617,7 @@
         </div>
         <div class="form-group">
           <label class="form-label">WHAT'S HAPPENING IN YOUR BUSINESS?</label>
-          <textarea class="form-textarea" rows="4" placeholder="Describe the problem, goal, or idea..." required></textarea>
+          <textarea class="form-textarea" rows="3" placeholder="Describe the problem, goal, or idea..." required></textarea>
         </div>
         <div class="modal-actions">
           <button type="button" class="btn btn-outline modal-close">Cancel</button>

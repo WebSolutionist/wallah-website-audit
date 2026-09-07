@@ -119,57 +119,93 @@ function initWorkbenchTabs() {
   });
 }
 
-/* 4. Application Modal System */
+/* 4. Application Modal System (Option A & Option 1 Integration) */
 function initModalSystem() {
   const modalTriggers = document.querySelectorAll('[data-open-modal]');
-  const modalCloses = document.querySelectorAll('.modal-close, .modal-overlay');
+  const modalOverlayList = document.querySelectorAll('.modal-overlay');
 
+  // Open modal
   modalTriggers.forEach(trigger => {
     trigger.addEventListener('click', (e) => {
       e.preventDefault();
       const modalId = trigger.getAttribute('data-open-modal');
       const modal = document.getElementById(modalId);
       if (modal) {
+        resetModalViews(modal);
         modal.classList.add('active');
         document.body.style.overflow = 'hidden';
       }
     });
   });
 
-  modalCloses.forEach(close => {
-    close.addEventListener('click', (e) => {
-      if (e.target === close || close.classList.contains('modal-close')) {
-        const modals = document.querySelectorAll('.modal-overlay');
-        modals.forEach(m => m.classList.remove('active'));
+  // Close modal via backdrop or close buttons
+  modalOverlayList.forEach(modal => {
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal || e.target.classList.contains('modal-close')) {
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+        setTimeout(() => resetModalViews(modal), 300);
+      }
+    });
+  });
+
+  // Form 1: Initiative 01 (5 Free Websites - Option A: Intake -> Success Card with WhatsApp Button)
+  const formWebsite = document.getElementById('form-website-apply');
+  if (formWebsite) {
+    formWebsite.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const formView = document.getElementById('modal-website-form-view');
+      const successView = document.getElementById('modal-website-success-view');
+
+      if (formView && successView) {
+        formView.style.display = 'none';
+        successView.style.display = 'block';
+        formWebsite.reset();
+      }
+    });
+  }
+
+  // Form 2: Initiative 02 (10 Free Diagnoses - Option 1: Intake -> Calendly Redirect)
+  const formDiagnosis = document.getElementById('form-diagnosis-request');
+  if (formDiagnosis) {
+    formDiagnosis.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const modal = document.getElementById('modal-diagnosis');
+      
+      // Open Calendly link in a new tab
+      window.open('https://calendly.com/wallahwaijiprecious/30min', '_blank');
+
+      if (modal) {
+        modal.classList.remove('active');
         document.body.style.overflow = '';
       }
+      formDiagnosis.reset();
     });
-  });
+  }
 
-  // Handle Form Submission
-  const modalForms = document.querySelectorAll('.modal-card form');
-  modalForms.forEach(form => {
-    form.addEventListener('submit', (e) => {
+  // Form 3: General Contact / Conversation
+  const formContact = document.getElementById('form-contact');
+  if (formContact) {
+    formContact.addEventListener('submit', (e) => {
       e.preventDefault();
-      const submitBtn = form.querySelector('button[type="submit"]');
-      if (submitBtn) {
-        const originalText = submitBtn.textContent;
-        submitBtn.disabled = true;
-        submitBtn.textContent = 'Submitting Application...';
-
-        setTimeout(() => {
-          alert('Thank you! Your application has been received. Precious will review your submission and contact you within 24 hours.');
-          form.reset();
-          submitBtn.disabled = false;
-          submitBtn.textContent = originalText;
-
-          const modals = document.querySelectorAll('.modal-overlay');
-          modals.forEach(m => m.classList.remove('active'));
-          document.body.style.overflow = '';
-        }, 1200);
+      const modal = document.getElementById('modal-contact');
+      alert('Thank you! Your message has been sent. Precious will contact you shortly.');
+      if (modal) {
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
       }
+      formContact.reset();
     });
-  });
+  }
+}
+
+function resetModalViews(modal) {
+  const formView = modal.querySelector('#modal-website-form-view');
+  const successView = modal.querySelector('#modal-website-success-view');
+  if (formView && successView) {
+    formView.style.display = 'block';
+    successView.style.display = 'none';
+  }
 }
 
 /* 5. Mobile Dock Navigation Observer */
