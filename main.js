@@ -4,7 +4,8 @@
 
 document.addEventListener('DOMContentLoaded', () => {
   initHeaderScroll();
-  initHeadlineMorpher();
+  initTypewriterEngine();
+  initScrollRevealObserver();
   initWorkbenchTabs();
   initModalSystem();
   initMobileDockObserver();
@@ -24,10 +25,10 @@ function initHeaderScroll() {
   });
 }
 
-/* 2. Hero Headline Morpher Slot Animation */
-function initHeadlineMorpher() {
-  const wrapper = document.querySelector('.headline-morph-wrapper');
-  if (!wrapper) return;
+/* 2. Realistic Typewriter & Delete-Back (Retract) Engine */
+function initTypewriterEngine() {
+  const textElement = document.getElementById('typewriter-text');
+  if (!textElement) return;
 
   const phrases = [
     'WORKING FOR YOUR BUSINESS?',
@@ -35,33 +36,69 @@ function initHeadlineMorpher() {
     'SAVING YOU HOURS OF MANUAL WORK?'
   ];
 
-  let currentIndex = 0;
-  let isHovered = false;
+  let phraseIndex = 0;
+  let charIndex = 0;
+  let isDeleting = false;
 
-  wrapper.addEventListener('mouseenter', () => { isHovered = true; });
-  wrapper.addEventListener('mouseleave', () => { isHovered = false; });
+  const typeSpeed = 55;        // Speed of typing each letter
+  const deleteSpeed = 30;      // Speed of backspacing/retracting
+  const holdDuration = 2500;   // Pause duration when phrase completes
 
-  setInterval(() => {
-    if (isHovered) return;
+  function typeLoop() {
+    const currentPhrase = phrases[phraseIndex];
 
-    const currentSpan = wrapper.querySelector('.headline-morph-text.active');
-    currentIndex = (currentIndex + 1) % phrases.length;
+    if (!isDeleting) {
+      // Type next character
+      textElement.textContent = currentPhrase.substring(0, charIndex + 1);
+      charIndex++;
 
-    const nextSpan = document.createElement('span');
-    nextSpan.className = 'headline-morph-text';
-    nextSpan.textContent = phrases[currentIndex];
+      if (charIndex === currentPhrase.length) {
+        // Hold full phrase
+        isDeleting = true;
+        setTimeout(typeLoop, holdDuration);
+        return;
+      }
+    } else {
+      // Retract/Delete back character
+      textElement.textContent = currentPhrase.substring(0, charIndex - 1);
+      charIndex--;
 
-    if (currentSpan) {
-      currentSpan.classList.remove('active');
-      currentSpan.classList.add('exit');
-      setTimeout(() => currentSpan.remove(), 450);
+      if (charIndex === 0) {
+        // Move to next phrase after deletion completes
+        isDeleting = false;
+        phraseIndex = (phraseIndex + 1) % phrases.length;
+      }
     }
 
-    wrapper.appendChild(nextSpan);
-    // Force reflow for animation trigger
-    void nextSpan.offsetWidth;
-    nextSpan.classList.add('active');
-  }, 3200);
+    setTimeout(typeLoop, isDeleting ? deleteSpeed : typeSpeed);
+  }
+
+  // Start engine
+  typeLoop();
+}
+
+/* 3. Dynamic Scroll Reveal Observer */
+function initScrollRevealObserver() {
+  const revealElements = document.querySelectorAll('[data-reveal]');
+  if (!revealElements.length) return;
+
+  const observerOptions = {
+    root: null,
+    rootMargin: '0px 0px -10% 0px',
+    threshold: 0.1
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('revealed');
+        // Unobserve after revealing for smooth performance
+        observer.unobserve(entry.target);
+      }
+    });
+  }, observerOptions);
+
+  revealElements.forEach(el => observer.observe(el));
 }
 
 /* 3. Workbench Tab Switcher (What I Turn Problems Into) */

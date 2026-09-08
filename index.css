@@ -369,35 +369,70 @@ h1, h2, h3, h4, .font-display {
   line-height: 1.15;
 }
 
-/* Headline Dynamic Morpher Slot */
-.headline-morph-wrapper {
+.hero-title-sub {
+  color: var(--text-main);
   display: inline-block;
-  position: relative;
-  vertical-align: bottom;
-  min-height: 1.25em;
+  margin-bottom: 0.25rem;
+}
+
+/* Typewriter Retract Line & Cursor Styling */
+.typewriter-line {
+  display: block;
+  min-height: 2.2em;
+  margin-top: 0.35rem;
   color: var(--primary-teal);
-  text-shadow: 0 0 20px var(--primary-teal-glow);
+  text-shadow: 0 0 25px var(--primary-teal-glow);
 }
 
-.headline-morph-text {
+.typewriter-text {
+  font-size: clamp(1.2rem, 3.8vw, 2.35rem);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  word-break: normal;
+}
+
+.typewriter-cursor {
   display: inline-block;
-  opacity: 0;
-  transform: translateY(20px) rotateX(-20deg);
-  transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1), transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
-  white-space: nowrap;
+  color: var(--primary-teal);
+  font-weight: 400;
+  margin-left: 2px;
+  animation: blinkCursor 0.8s infinite;
 }
 
-.headline-morph-text.active {
+@keyframes blinkCursor {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* ==========================================================================
+   SCROLL REVEAL ENGINE (GPU-Accelerated Section Transitions)
+   ========================================================================== */
+
+[data-reveal] {
+  opacity: 0;
+  will-change: transform, opacity;
+  transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1), transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+[data-reveal="fade-up"] {
+  transform: translateY(35px);
+}
+
+[data-reveal="fade-left"] {
+  transform: translateX(-40px);
+}
+
+[data-reveal="fade-right"] {
+  transform: translateX(40px);
+}
+
+[data-reveal="scale-up"] {
+  transform: scale(0.92);
+}
+
+[data-reveal].revealed {
   opacity: 1;
-  transform: translateY(0) rotateX(0deg);
-}
-
-.headline-morph-text.exit {
-  opacity: 0;
-  transform: translateY(-20px) rotateX(20deg);
-  position: absolute;
-  left: 0;
-  top: 0;
+  transform: translate(0) scale(1);
 }
 
 .hero-subtext {
