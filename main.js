@@ -25,7 +25,7 @@ function initHeaderScroll() {
   });
 }
 
-/* 2. Realistic Typewriter & Delete-Back (Retract) Engine */
+/* 2. Realistic Typewriter & Delete-Back (Retract) Engine (Paced & Calm) */
 function initTypewriterEngine() {
   const textElement = document.getElementById('typewriter-text');
   if (!textElement) return;
@@ -40,31 +40,27 @@ function initTypewriterEngine() {
   let charIndex = 0;
   let isDeleting = false;
 
-  const typeSpeed = 55;        // Speed of typing each letter
-  const deleteSpeed = 30;      // Speed of backspacing/retracting
-  const holdDuration = 2500;   // Pause duration when phrase completes
+  const typeSpeed = 75;        // Paced typing speed per letter
+  const deleteSpeed = 45;      // Smooth retract/delete speed
+  const holdDuration = 3500;   // Extended hold for calm readability
 
   function typeLoop() {
     const currentPhrase = phrases[phraseIndex];
 
     if (!isDeleting) {
-      // Type next character
       textElement.textContent = currentPhrase.substring(0, charIndex + 1);
       charIndex++;
 
       if (charIndex === currentPhrase.length) {
-        // Hold full phrase
         isDeleting = true;
         setTimeout(typeLoop, holdDuration);
         return;
       }
     } else {
-      // Retract/Delete back character
       textElement.textContent = currentPhrase.substring(0, charIndex - 1);
       charIndex--;
 
       if (charIndex === 0) {
-        // Move to next phrase after deletion completes
         isDeleting = false;
         phraseIndex = (phraseIndex + 1) % phrases.length;
       }
@@ -73,32 +69,38 @@ function initTypewriterEngine() {
     setTimeout(typeLoop, isDeleting ? deleteSpeed : typeSpeed);
   }
 
-  // Start engine
   typeLoop();
 }
 
-/* 3. Dynamic Scroll Reveal Observer */
+/* 3. Calm Group Scroll Reveal Observer */
 function initScrollRevealObserver() {
   const revealElements = document.querySelectorAll('[data-reveal]');
   if (!revealElements.length) return;
 
+  // Reveal hero group immediately on page load with 1.2s ease
+  const heroGroup = document.querySelector('[data-reveal="hero-group"]');
+  if (heroGroup) {
+    requestAnimationFrame(() => heroGroup.classList.add('revealed'));
+  }
+
   const observerOptions = {
     root: null,
-    rootMargin: '0px 0px -10% 0px',
-    threshold: 0.1
+    rootMargin: '0px 0px -15% 0px',
+    threshold: 0.05
   };
 
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         entry.target.classList.add('revealed');
-        // Unobserve after revealing for smooth performance
         observer.unobserve(entry.target);
       }
     });
   }, observerOptions);
 
-  revealElements.forEach(el => observer.observe(el));
+  revealElements.forEach(el => {
+    if (el !== heroGroup) observer.observe(el);
+  });
 }
 
 /* 3. Workbench Tab Switcher (What I Turn Problems Into) */
