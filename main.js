@@ -4,7 +4,7 @@
 
 document.addEventListener('DOMContentLoaded', () => {
   initHeaderScroll();
-  initHeroProblemMatrix();
+  initHeadlineMorpher();
   initWorkbenchTabs();
   initModalSystem();
   initMobileDockObserver();
@@ -24,78 +24,44 @@ function initHeaderScroll() {
   });
 }
 
-/* 2. Hero Interactive Problem-to-Solution Matrix */
-function initHeroProblemMatrix() {
-  const problemChips = document.querySelectorAll('.problem-chip');
-  const problemStepTitle = document.getElementById('matrix-problem-title');
-  const problemStepDesc = document.getElementById('matrix-problem-desc');
-  const thinkStepTitle = document.getElementById('matrix-think-title');
-  const thinkStepDesc = document.getElementById('matrix-think-desc');
-  const solutionStepTitle = document.getElementById('matrix-solution-title');
-  const solutionStepDesc = document.getElementById('matrix-solution-desc');
+/* 2. Hero Headline Morpher Slot Animation */
+function initHeadlineMorpher() {
+  const wrapper = document.querySelector('.headline-morph-wrapper');
+  if (!wrapper) return;
 
-  const problemData = {
-    'low-conversion': {
-      problemTitle: 'High Traffic, Zero Leads',
-      problemDesc: 'Visitors leave without taking action due to mixed messaging and lack of trust.',
-      thinkTitle: 'Friction & Clarity Analysis',
-      thinkDesc: 'Map real user drop-off points, strip fluff, and isolate the exact barrier to conversion.',
-      solutionTitle: 'Strategic Conversion Engine',
-      solutionDesc: 'High-speed website rebuilt around clear positioning, proof, and single-focus CTAs.'
-    },
-    'manual-chaos': {
-      problemTitle: 'Manual Client Onboarding',
-      problemDesc: 'Spending 5+ hours weekly answering repetitive inquiries and manually collecting data.',
-      thinkTitle: 'Workflow Automation Mapping',
-      thinkDesc: 'Identify repetitive touchpoints and build automated intake & routing rules.',
-      solutionTitle: 'Digital Portal & Automation',
-      solutionDesc: 'Self-service client portal with automated CRM syncing and instant scheduling.'
-    },
-    'no-website': {
-      problemTitle: 'No Professional Web Presence',
-      problemDesc: 'Operating solely on social media; losing high-ticket clients who demand credibility.',
-      thinkTitle: 'Core Value Positioning',
-      thinkDesc: 'Extract your core offer and define why you are the obvious choice.',
-      solutionTitle: 'High-Impact Brand Website',
-      solutionDesc: 'A fast, high-converting 1-page site that establishes immediate market authority.'
-    },
-    'ai-support': {
-      problemTitle: 'Customer Support Bottlenecks',
-      problemDesc: 'Support inbox flooded with basic questions, delaying response times for real leads.',
-      thinkTitle: 'Knowledge Integration',
-      thinkDesc: 'Train custom AI agent on business FAQs, services, and qualifying logic.',
-      solutionTitle: 'Intelligent AI Concierge',
-      solutionDesc: 'AI chatbot embedded on website to qualify visitors and book calls 24/7.'
+  const phrases = [
+    'WORKING FOR YOUR BUSINESS?',
+    'CAPTURING REAL LEADS?',
+    'SAVING YOU HOURS OF MANUAL WORK?'
+  ];
+
+  let currentIndex = 0;
+  let isHovered = false;
+
+  wrapper.addEventListener('mouseenter', () => { isHovered = true; });
+  wrapper.addEventListener('mouseleave', () => { isHovered = false; });
+
+  setInterval(() => {
+    if (isHovered) return;
+
+    const currentSpan = wrapper.querySelector('.headline-morph-text.active');
+    currentIndex = (currentIndex + 1) % phrases.length;
+
+    const nextSpan = document.createElement('span');
+    nextSpan.className = 'headline-morph-text';
+    nextSpan.textContent = phrases[currentIndex];
+
+    if (currentSpan) {
+      currentSpan.classList.remove('active');
+      currentSpan.classList.add('exit');
+      setTimeout(() => currentSpan.remove(), 450);
     }
-  };
 
-  problemChips.forEach(chip => {
-    chip.addEventListener('click', () => {
-      // Toggle active chip
-      problemChips.forEach(c => c.classList.remove('active'));
-      chip.classList.add('active');
-
-      const key = chip.getAttribute('data-problem');
-      const data = problemData[key];
-
-      if (!data) return;
-
-      // Animate matrix content updates
-      const matrix = document.querySelector('.blueprint-matrix');
-      if (matrix) matrix.style.opacity = '0.7';
-
-      setTimeout(() => {
-        if (problemStepTitle) problemStepTitle.textContent = data.problemTitle;
-        if (problemStepDesc) problemStepDesc.textContent = data.problemDesc;
-        if (thinkStepTitle) thinkStepTitle.textContent = data.thinkTitle;
-        if (thinkStepDesc) thinkStepDesc.textContent = data.thinkDesc;
-        if (solutionStepTitle) solutionStepTitle.textContent = data.solutionTitle;
-        if (solutionStepDesc) solutionStepDesc.textContent = data.solutionDesc;
-
-        if (matrix) matrix.style.opacity = '1';
-      }, 150);
-    });
-  });
+    wrapper.appendChild(nextSpan);
+    // Force reflow for animation trigger
+    void nextSpan.offsetWidth;
+    nextSpan.classList.add('active');
+  }, 3200);
 }
 
 /* 3. Workbench Tab Switcher (What I Turn Problems Into) */
