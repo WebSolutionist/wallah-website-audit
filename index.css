@@ -997,6 +997,13 @@ html, body {
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
 }
 
+@media (max-width: 480px) {
+  .cta-box {
+    padding: 2.5rem 1rem;
+    max-width: 100%;
+  }
+}
+
 .cta-title {
   font-size: var(--text-h1);
   margin-bottom: 1.25rem;
