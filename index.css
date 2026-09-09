@@ -1036,6 +1036,25 @@ html, body {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 1.5rem;
+}
+
+.footer-social-links {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.footer-link {
+  color: var(--text-subtle);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+.footer-link:hover {
+  color: var(--primary-teal);
 }
 
 @media (max-width: 640px) {
@@ -1043,6 +1062,15 @@ html, body {
     flex-direction: column;
     gap: 1.25rem;
     text-align: center;
+  }
+  .footer-social-links {
+    flex-direction: column;
+    gap: 0.75rem;
+    width: 100%;
+  }
+  .footer-email-link {
+    word-break: break-all;
+    max-width: 100%;
   }
 }
 
