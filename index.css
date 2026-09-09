@@ -867,6 +867,15 @@ html, body {
   }
 }
 
+@media (max-width: 480px) {
+  .initiative-card {
+    padding: 1.5rem 1.15rem;
+  }
+  .diagnostic-item-card {
+    padding: 1rem;
+  }
+}
+
 /* ==========================================================================
    ABOUT SECTION & SOCIAL MEDIA CONNECTIONS
    ========================================================================== */
